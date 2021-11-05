@@ -1,0 +1,124 @@
+body {
+  background-color: #292929;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  height: 12px;
+  width: 12px;
+  background: #292929;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #626669;
+  -webkit-border-radius: 1ex;
+  -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+}
+
+::-webkit-scrollbar-corner {
+  background: #292929;
+}
+
+* {
+  color: rgb(196, 196, 196);
+  font-family: sans-serif;
+  scrollbar-color: #292929 #292929 !important;
+  box-sizing: border-box;
+}
+
+.InsideBox {
+  background-color: rgba(136, 136, 136, 0.2);
+  /* opacity: 0.1; */
+  color: rgb(196, 196, 196);
+  /* border-radius: 10px; */
+  /* padding: 10px; */
+  /* margin: 10px; */
+  box-shadow: 0px 5px 6px rgb(0, 0, 0, 0.2) !important;
+}
+
+.InsideBox > * {
+  box-sizing: border-box;
+}
+
+button {
+  background: rgb(68, 68, 68);
+  /* border: 1px solid #ccc; */
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 10px 0;
+  padding: 10px;
+  text-align: center;
+  margin: 0 10px;
+  /* width: 100%; */
+}
+button.close {
+  /* background: #585858; */
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  padding: 10px 0px;
+  /* opacity: 0.5; */
+}
+
+button:hover {
+  background: rgb(83, 83, 83);
+}
+
+button.red:hover {
+  background: rgb(253, 34, 34);
+}
+
+.react-draggable {
+  cursor: grab;
+}
+.react-draggable div {
+  cursor: grab !important;
+}
+textarea {
+  color: white;
+}
+
+.contorno {
+  box-sizing: border-box;
+  border-style: dotted;
+  border-color: #eeeeee;
+  border-width: 2.5px;
+}
+
+input {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  border-bottom: 2px solid #ccc;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px;
+  width: 100%;
+  margin: 10px 0;
+  transition: all 0.1s linear;
+}
+
+input:focus {
+  background: none;
+  background-color: transparent;
+  border-bottom: 2px solid rgb(0, 224, 176);
+  /* background: transparent; */
+  color: white;
+  font-size: 14.5px;
+  font-weight: bold;
+  padding: 10px;
+  width: 100%;
+  margin: 10px 0;
+  transition: all 0.1s linear;
+}
+
+.layout *:has(input) {
+  background-color: transparent;
+  background: none;
+}

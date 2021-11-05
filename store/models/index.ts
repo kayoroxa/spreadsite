@@ -1,3 +1,4 @@
+import pageSettings, { PageSettingsModel } from './pageSettings'
 import { createTypedHooks } from 'easy-peasy'
 import pageMethods, { PageMethodsModel } from './pageMethods'
 import project, { ProjectModel } from './projectModel'
@@ -5,11 +6,13 @@ import project, { ProjectModel } from './projectModel'
 export interface StoreModel {
   project: ProjectModel
   pageMethods: PageMethodsModel
+  pageSettings: PageSettingsModel
 }
 
 const model: StoreModel = {
   project,
   pageMethods,
+  pageSettings,
 }
 
 export default model

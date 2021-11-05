@@ -14,12 +14,11 @@ export default function MainCells({
   isDraggable,
   allowEdit,
   mode,
-  index,
 }: any) {
   const [width, _] = useWindowSize()
   const layouts: I_Layout[] = useMemo(() => {
     return cells.map((cell: I_Cell) => cell.layout)
-  }, [])
+  }, [cells])
 
   function handleSetAllValues(index: number, valuesFunc: ValuesFunc) {
     // setAllValues(prev => {
@@ -38,8 +37,17 @@ export default function MainCells({
         cols={80}
         rowHeight={6}
         width={width}
-        onLayoutChange={(layout: I_Layout[]) => {
-          onLayoutChange(layout)
+        onLayoutChange={(layouts: I_Layout[]) => {
+          console.log({ size: layouts })
+          onLayoutChange(
+            layouts.map(({ h, i, w, x, y }: I_Layout) => ({ h, i, w, x, y }))
+          )
+        }}
+        onDragStop={(layouts: I_Layout[]) => {
+          console.log({ drag: layouts })
+          onLayoutChange(
+            layouts.map(({ h, i, w, x, y }: I_Layout) => ({ h, i, w, x, y }))
+          )
         }}
         preventCollision={true}
         allowOverlap={true}

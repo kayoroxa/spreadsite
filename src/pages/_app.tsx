@@ -1,4 +1,6 @@
 import '../styles/reset.css'
+import '../styles/cells.css'
+import '../styles/main.css'
 import type { AppProps } from 'next/app'
 import { StoreProvider, createStore } from 'easy-peasy'
 import model from '../../store/models'

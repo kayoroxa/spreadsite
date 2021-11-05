@@ -26,7 +26,7 @@ export default function InCell({
   handleSetAllCodes,
 }: IProps) {
   // const { tryEval } = mainMethodsPlanilha(allValues, setAllValues)
-  const tryEval = (v: any) => console.log(v)
+  const tryEval = (v: any) => console.log({ eval: v })
 
   return (
     <>

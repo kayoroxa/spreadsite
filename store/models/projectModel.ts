@@ -1,6 +1,8 @@
+import { I_Cell } from './../../src/utils/@types/projectTypes'
 import axios from 'axios'
 import { action, Action, thunk, Thunk } from 'easy-peasy'
 import { I_Page, I_Project } from '../../src/utils/@types/projectTypes'
+import getNewLayout from '../../src/utils/getNewLayout'
 
 type MyActionPrev<T> = T | ((prev: T) => T)
 
@@ -10,6 +12,10 @@ export interface ProjectModel {
   loadProject: Action<ProjectModel, I_Project>
   setProject: Action<ProjectModel, MyActionPrev<I_Project>>
   saveProjectInDb: Thunk<ProjectModel, I_Project>
+
+  addLayout: Action<ProjectModel>
+  resetLayout: Action<ProjectModel>
+  deleteCell: Action<ProjectModel, number>
 }
 
 const project: ProjectModel = {
@@ -17,14 +23,14 @@ const project: ProjectModel = {
   pages: [],
   loadProject: action((state, payload) => {
     state.name = payload.name
+    console.log({ pages: payload.pages })
     state.pages = payload.pages
   }),
   setProject: action((state, payload) => {
     if (typeof payload === 'function') {
       payload(state)
     } else {
-      state.name = payload.name
-      state.pages = payload.pages
+      state = payload
     }
   }),
   saveProjectInDb: thunk(async (_, payload, { getState }) => {
@@ -34,6 +40,15 @@ const project: ProjectModel = {
       payload
     )
     console.log(response)
+  }),
+  addLayout: action(state => {
+    state.pages[0].cells.push(getNewLayout(state.pages))
+  }),
+  resetLayout: action(state => {
+    state.pages[0].cells = []
+  }),
+  deleteCell: action((state, payload) => {
+    state.pages[0].cells.splice(payload, 1)
   }),
 }
 

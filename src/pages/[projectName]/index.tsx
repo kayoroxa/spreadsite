@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { useActions, useStore } from '../../../store/models'
-import { I_Project } from '../../utils/@types/projectTypes'
+import { I_Layout, I_Project } from '../../utils/@types/projectTypes'
 import axios from 'axios'
+import MainCells from '../../components/MainCells'
+import ButtonsMenu from '../../components/ButtonsMenu'
 
 interface IProps {
   data: I_Project
@@ -9,12 +11,16 @@ interface IProps {
 
 function ProjectHome({ data }: IProps) {
   const project = useStore(state => state.project)
+  const { allowEdit, lastCLickCellIndex, modeLanguage, staticCells } = useStore(
+    state => state.pageSettings
+  )
   const { loadProject, setProject, saveProjectInDb } = useActions(
     actions => actions.project
   )
 
   useEffect(() => {
     if (!project.name || project.name !== data.name) {
+      console.log({ data })
       loadProject(data)
     }
   }, [])
@@ -34,7 +40,6 @@ function ProjectHome({ data }: IProps) {
             y: 0,
             w: 1,
             h: 2,
-            static: true,
           },
           code: { css: '', js: '', html: '' },
         },
@@ -47,15 +52,31 @@ function ProjectHome({ data }: IProps) {
   }
   return (
     <div>
-      <h1>{project.name}</h1>
-      {/* <ul>
-        {project.pages.map(item => (
-          <li key={item.name}>{item.name}</li>
-        ))}
-      </ul> */}
       {JSON.stringify(project.pages)}
-      <button onClick={handleClick}>Click</button>
-      <button onClick={handleSave}>Save</button>
+      <MainCells
+        onLayoutChange={(layouts: I_Layout[]) => {
+          console.log({ onLayoutChange: layouts })
+          if (layouts.length === 0) {
+            console.log('vazio')
+            return
+          }
+          setProject((prev: I_Project) => {
+            const newProject = { ...prev }
+            debugger
+            newProject.pages[0].cells = newProject.pages[0].cells.map(
+              (c, i) => ({ ...c, layout: layouts[i] })
+            )
+            return newProject
+          })
+        }}
+        onLastCellClick={(index: any) => console.log({ index })}
+        lastCellCLickIndex={lastCLickCellIndex}
+        cells={project.pages[0].cells}
+        isDraggable={!staticCells}
+        allowEdit={allowEdit}
+        mode={modeLanguage}
+      />
+      <ButtonsMenu />
     </div>
   )
 }
