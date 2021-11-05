@@ -1,0 +1,40 @@
+export interface I_PageRoutes {
+  page: string
+  project: string
+}
+
+interface I_Layout {
+  page: string
+  project: string
+  layoutData: [{
+    h: number
+    i: string
+    moved?: boolean | undefined
+    static?: boolean | undefined
+    w: number
+    x: number
+    y: number
+    minH?: number
+    minW?: number
+  }....]
+}
+
+
+
+
+(project) {
+  name : string,
+  pages: [
+    {
+      name : string,
+      cells: [
+        {
+          layout : {h, i ...},
+          code: {css, js...},
+        }
+        ...
+      ]
+    }
+    ...
+  ],
+}
