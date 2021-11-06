@@ -82,7 +82,7 @@ const project: ProjectModel = {
   addLayout: action(state => {
     if (state.currentPageIndex === null) return
     state.data.pages[state.currentPageIndex].cells.push(
-      getNewLayout(state.data.pages)
+      getNewLayout(state.data.pages, state.currentPageIndex)
     )
   }),
   resetLayout: action(state => {

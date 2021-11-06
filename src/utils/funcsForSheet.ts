@@ -1,16 +1,12 @@
 import { I_Code } from './@types/projectTypes'
 
 import _ from 'lodash'
-import { Dispatch, SetStateAction } from 'react'
-
-interface IProps {
-  codes: I_Code[]
-  setCode: Dispatch<SetStateAction<I_Code[]>>
-}
+import { PageAndCode } from './@types/othersTypes'
 
 export function mainMethodsPlanilha(
-  codes: I_Code[],
-  setCode: (codes: I_Code[]) => void
+  pageCodes: PageAndCode[],
+  // handleCodeChange: (codes: PageAndCode[]) => void,
+  currentPageIndex: number
 ) {
   // console.log(codes)
   function replaceCode(code: string) {
@@ -51,25 +47,26 @@ export function mainMethodsPlanilha(
     }
   }
 
-  function pegar(index: number) {
+  function pegar(index: number, pageIndex = currentPageIndex) {
     // console.log({ codes, pegar: true })
-    const celula = codes[index]
+    const code = pageCodes[pageIndex].codes[index]
 
-    if (celula) {
+    if (code) {
       return {
         set: {
-          code: (value: any) => {
-            setCode((code: I_Code[]) => {
-              const newCode = _.cloneDeep(code)
-              newCode[index].js = value
-              return newCode
-            })
+          code: () => {
+            console.log('wait')
+            // setCode((code: I_Code[]) => {
+            //   const newCode = _.cloneDeep(code)
+            //   newCode[index].js = value
+            //   return newCode
+            // })
           },
         },
         get: {
-          code: () => celula.js,
-          css: () => celula.css,
-          result: () => tryEval(celula.js),
+          code: () => code.js,
+          css: () => code.css,
+          result: () => tryEval(code.js),
         },
       }
     } else return ''

@@ -1,4 +1,4 @@
-import { Action, action, Thunk, thunk } from 'easy-peasy'
+import { Action, action, persist, Thunk, thunk } from 'easy-peasy'
 import { I_CodeLanguage } from '../../src/utils/@types/projectTypes'
 
 type MyActionPrev<T> = T | ((prev: T) => T)
@@ -16,55 +16,58 @@ export interface PageSettingsModel {
   setModeLanguage: Action<PageSettingsModel, MyActionPrev<I_CodeLanguage>>
 
   lastCLickCellIndex: number | null
-  setLastCLickCellIndex: Action<PageSettingsModel, number>
+  setLastCLickCellIndex: Action<PageSettingsModel, number | null>
 
   // pageRoute: I_PageRoutes | null
   // setPageRoute: Action<PageSettingsModel, I_PageRoutes>
 }
 
-const pageSettings: PageSettingsModel = {
-  allowEdit: false,
-  setAllowEdit: action((state, payload) => {
-    if (typeof payload === 'function') {
-      state.allowEdit = payload(state.allowEdit)
-    } else {
-      state.allowEdit = payload
-    }
-  }),
-  toggleAllowEdit: thunk(async actions => {
-    actions.setAllowEdit(prev => !prev)
-  }),
+const pageSettings: PageSettingsModel = persist(
+  {
+    allowEdit: false,
+    setAllowEdit: action((state, payload) => {
+      if (typeof payload === 'function') {
+        state.allowEdit = payload(state.allowEdit)
+      } else {
+        state.allowEdit = payload
+      }
+    }),
+    toggleAllowEdit: thunk(async actions => {
+      actions.setAllowEdit(prev => !prev)
+    }),
 
-  staticCells: true,
-  setStaticCells: action((state, payload) => {
-    if (typeof payload === 'function') {
-      state.staticCells = payload(state.staticCells)
-    } else {
-      state.staticCells = payload
-    }
-  }),
-  toggleStaticCells: thunk(async actions => {
-    actions.setStaticCells(prev => !prev)
-  }),
+    staticCells: true,
+    setStaticCells: action((state, payload) => {
+      if (typeof payload === 'function') {
+        state.staticCells = payload(state.staticCells)
+      } else {
+        state.staticCells = payload
+      }
+    }),
+    toggleStaticCells: thunk(async actions => {
+      actions.setStaticCells(prev => !prev)
+    }),
 
-  modeLanguage: 'js',
-  setModeLanguage: action((state, payload) => {
-    if (typeof payload === 'function') {
-      state.modeLanguage = payload(state.modeLanguage)
-    } else {
-      state.modeLanguage = payload
-    }
-  }),
+    modeLanguage: 'js',
+    setModeLanguage: action((state, payload) => {
+      if (typeof payload === 'function') {
+        state.modeLanguage = payload(state.modeLanguage)
+      } else {
+        state.modeLanguage = payload
+      }
+    }),
 
-  // pageRoute: null,
-  // setPageRoute: action((state, payload) => {
-  //   state.pageRoute = payload
-  // }),
+    // pageRoute: null,
+    // setPageRoute: action((state, payload) => {
+    //   state.pageRoute = payload
+    // }),
 
-  lastCLickCellIndex: null,
-  setLastCLickCellIndex: action((state, payload) => {
-    state.lastCLickCellIndex = payload
-  }),
-}
+    lastCLickCellIndex: null,
+    setLastCLickCellIndex: action((state, payload) => {
+      state.lastCLickCellIndex = payload
+    }),
+  },
+  { storage: 'localStorage' }
+)
 
 export default pageSettings

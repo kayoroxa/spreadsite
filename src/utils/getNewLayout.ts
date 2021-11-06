@@ -1,6 +1,9 @@
 import { I_Cell, I_Page } from './@types/projectTypes'
 
-export default function getNewLayout(pages: I_Page[]): I_Cell {
+export default function getNewLayout(
+  pages: I_Page[],
+  indexPage: number
+): I_Cell {
   // if (!myLayout) throw new Error('MyLayout não existe')
   const layoutResult = {
     h: 10,
@@ -13,8 +16,8 @@ export default function getNewLayout(pages: I_Page[]): I_Cell {
   }
   const code = { js: '', css: '', html: '' }
 
-  const lastCell = pages[0].cells[pages[0].cells.length - 1]
-  const len = pages[0].cells.length
+  const lastCell = pages[indexPage].cells[pages[indexPage].cells.length - 1]
+  const len = pages[indexPage].cells.length
   if (len === 0) {
     return { layout: layoutResult, code }
   }

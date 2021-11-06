@@ -1,14 +1,6 @@
-import { action, thunk } from 'easy-peasy'
-
-type MyActionPrev<T> = T | ((prev: T) => T)
-
 export interface PageMethodsModel {}
 
-const pageMethods: PageMethodsModel = {
-  addLayoutCell: thunk((_, payload, { getStoreActions }) => {
-    getStoreActions().project.loadProject(payload)
-  }),
-}
+const pageMethods: PageMethodsModel = {}
 
 export default pageMethods
 

@@ -47,6 +47,7 @@ function Page({ data, pageName }: IProps) {
         loadProject(data)
         setCurrentPageIndex(index)
       }
+      console.log('deu else', { currentPageIndex })
       setCurrentPageName(pageName)
       // const index2 =
       //   projectData.pages.length > 0 ? projectData.pages.length - 1 : 0
@@ -74,7 +75,7 @@ function Page({ data, pageName }: IProps) {
   console.log(project.isSaved)
   return (
     <div>
-      {/* {JSON.stringify(lastCLickCellIndex)} */}
+      {JSON.stringify(projectData.pages.map(p => p.cells.map(c => c.layout)))}
       {allowEdit ||
         (!staticCells && (
           <p style={{ position: 'fixed' }}>
