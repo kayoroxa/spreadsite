@@ -72,7 +72,7 @@ const project: ProjectModel = {
     const project = getState()
     actions.setIsSaved(true)
     const response = await axios.put(
-      'http://localhost:3000/api/projects/' + project.data.name,
+      'https://spreadsite.vercel.app/api/projects/' + project.data.name,
       project.data
     )
     console.log({ response })

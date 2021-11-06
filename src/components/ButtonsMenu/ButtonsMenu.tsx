@@ -13,6 +13,7 @@ const ButtonsMenu = () => {
   const { addLayout, resetLayout, deleteCell, saveProjectInDb } = useActions(
     actions => actions.project
   )
+  const { isSaved } = useStore(state => state.project)
   return (
     <ContainerButtonsMenu>
       <button onClick={() => setAllowEdit(!allowEdit)}>
@@ -31,7 +32,12 @@ const ButtonsMenu = () => {
           Delete Select
         </button>
       )}
-      <button onClick={() => saveProjectInDb()}>Save</button>
+      <button
+        style={{ display: isSaved ? 'none' : 'block' }}
+        onClick={() => saveProjectInDb()}
+      >
+        Save
+      </button>
     </ContainerButtonsMenu>
   )
 }
