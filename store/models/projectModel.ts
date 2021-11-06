@@ -52,7 +52,6 @@ const project: ProjectModel = {
   }),
   loadProject: action((state, payload) => {
     state.data.name = payload.name
-    console.log({ pages: payload.pages })
     state.data.pages = payload.pages
   }),
   setProject: action((state, payload) => {

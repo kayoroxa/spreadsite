@@ -48,7 +48,6 @@ function Page({ data }: IProps) {
         setProject(() => {
           const newData = { ...data }
           newData.pages = [...data.pages, createNewPage(pageName)]
-          console.log({ newData, data })
           return newData
         })
         setCurrentPageIndex(data.pages.length)
@@ -82,7 +81,6 @@ function Page({ data }: IProps) {
     )
   }
 
-  console.log(project.isSaved)
   return (
     <div>
       {/* {JSON.stringify(projectData.pages.map(p => p.cells.map(c => c.layout)))} */}
@@ -163,7 +161,7 @@ export async function getServerSideProps(context: any) {
   // const data = await Project.find({ name: projectName })
   try {
     const res = await axios.get(
-      `http://localhost:3000/api/projects/${projectName}`
+      `https://spreadsite.vercel.app/api/projects/${projectName}`
     )
     const data = res.data
     return { props: { data: data.data } }

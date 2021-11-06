@@ -29,7 +29,6 @@ export default function MainCells({
         rowHeight={6}
         width={width}
         onLayoutChange={(layouts: I_Layout[]) => {
-          console.log({ size: layouts })
           onLayoutChange(
             layouts.map(({ h, i, w, x, y, minH, minW }: I_Layout) => ({
               h,
@@ -43,7 +42,6 @@ export default function MainCells({
           )
         }}
         onDragStop={(layouts: I_Layout[]) => {
-          console.log({ drag: layouts })
           onLayoutChange(
             layouts.map(({ h, i, w, x, y, minH, minW }: I_Layout) => ({
               h,

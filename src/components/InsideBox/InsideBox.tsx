@@ -50,7 +50,6 @@ export default function InsideBox({
   tryEval,
   allowEdit,
 }: Props) {
-  console.log({ value, modeLang })
   const [isEditing, setIsEditing] = useState(false)
   // console.log({ id: value, printBrothers: printBrothers() })
   const showCode = !isEditing || !allowEdit
@@ -72,8 +71,8 @@ export default function InsideBox({
       {isEditing && allowEdit && (
         <EditInPlace
           value={value[modeLang]}
-          onChange={(value: ObjLang) => {
-            console.log({ value })
+          onChange={() => {
+            // console.log({ value })
             // onValueChange((prev: ObjLang) => ({ ...prev, [modeLang]: value }))
           }}
           breakLine={false}
