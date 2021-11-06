@@ -5,6 +5,8 @@ const Title = styled.h1`
 `
 import InsideBox from '../InsideBox/InsideBox'
 import { I_Code } from '../../utils/@types/projectTypes'
+import { mainMethodsPlanilha } from '../../utils/funcsForSheet'
+import { useActions, useStore } from '../../../store/models'
 
 interface IProps {
   code: I_Code
@@ -25,8 +27,22 @@ export default function InCell({
   showIndex = true,
   handleSetAllCodes,
 }: IProps) {
-  // const { tryEval } = mainMethodsPlanilha(allValues, setAllValues)
-  const tryEval = (v: any) => console.log({ eval: v })
+  const projectData = useStore(store => store.project.data)
+  const { setProject } = useActions(actions => actions.project)
+
+  function handleCodeChange(codes: I_Code[]) {
+    setProject(prev => {
+      const newProject = { ...prev }
+      newProject.pages[0].cells = newProject.pages[0].cells.map((cell, i) => {
+        return { ...cell, code: codes[i] }
+      })
+      return newProject
+    })
+  }
+  const allValues = projectData.pages[0].cells.map(cell => cell.code)
+
+  const { tryEval } = mainMethodsPlanilha(allValues, handleCodeChange)
+  // const tryEval = (v: any) => console.log({ eval: v })
 
   return (
     <>

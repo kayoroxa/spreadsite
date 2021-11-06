@@ -26,7 +26,7 @@ const pageSettings: PageSettingsModel = {
   allowEdit: false,
   setAllowEdit: action((state, payload) => {
     if (typeof payload === 'function') {
-      payload(state.allowEdit)
+      state.allowEdit = payload(state.allowEdit)
     } else {
       state.allowEdit = payload
     }
@@ -38,7 +38,7 @@ const pageSettings: PageSettingsModel = {
   staticCells: true,
   setStaticCells: action((state, payload) => {
     if (typeof payload === 'function') {
-      payload(state.staticCells)
+      state.staticCells = payload(state.staticCells)
     } else {
       state.staticCells = payload
     }
@@ -50,7 +50,7 @@ const pageSettings: PageSettingsModel = {
   modeLanguage: 'js',
   setModeLanguage: action((state, payload) => {
     if (typeof payload === 'function') {
-      payload(state.modeLanguage)
+      state.modeLanguage = payload(state.modeLanguage)
     } else {
       state.modeLanguage = payload
     }

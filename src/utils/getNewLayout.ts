@@ -15,8 +15,11 @@ export default function getNewLayout(pages: I_Page[]): I_Cell {
 
   const lastCell = pages[0].cells[pages[0].cells.length - 1]
   const len = pages[0].cells.length
+  if (len === 0) {
+    return { layout: layoutResult, code }
+  }
   if (lastCell.layout && len) {
-    layoutResult.i = (len + 1)?.toString()
+    layoutResult.i = len?.toString()
     layoutResult.x = lastCell.layout.x + lastCell.layout.w
   }
   return { layout: layoutResult, code }

@@ -17,10 +17,10 @@ const ButtonsMenu = () => {
   const { allowEdit, lastCLickCellIndex, staticCells } = useStore(
     state => state.pageSettings
   )
-  const { setAllowEdit, setStaticCells } = useActions(
+  const { setAllowEdit, toggleStaticCells } = useActions(
     actions => actions.pageSettings
   )
-  const { addLayout, resetLayout, deleteCell } = useActions(
+  const { addLayout, resetLayout, deleteCell, saveProjectInDb } = useActions(
     actions => actions.project
   )
   return (
@@ -30,7 +30,7 @@ const ButtonsMenu = () => {
       </button>
       <button onClick={() => addLayout()}>Add Layout</button>
       <button onClick={() => resetLayout()}>Reset Layout</button>
-      <button onClick={() => setStaticCells((prev: boolean) => !prev)}>
+      <button onClick={() => toggleStaticCells()}>
         {!staticCells ? 'Not Allow Drag' : 'Allow Drag'}
       </button>
       {lastCLickCellIndex !== null && allowEdit && (
@@ -41,6 +41,7 @@ const ButtonsMenu = () => {
           Delete Select
         </button>
       )}
+      <button onClick={() => saveProjectInDb()}>Save</button>
     </ContainerButtonsMenu>
   )
 }

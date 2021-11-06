@@ -1,18 +1,24 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useActions, useStore } from '../../../store/models'
-import { I_Code, I_Layout, I_Project } from '../../utils/@types/projectTypes'
+import { I_Layout, I_Project } from '../../utils/@types/projectTypes'
 import axios from 'axios'
 import MainCells from '../../components/MainCells'
 import ButtonsMenu from '../../components/ButtonsMenu'
 import EditCodeDT from '../../components/EditCodeDT'
+import { createNewPage } from '../../utils/createNewPage'
 
 interface IProps {
   data: I_Project
+  pageName: string
 }
 
-function ProjectHome({ data }: IProps) {
+function Page({ data, pageName }: IProps) {
   const projectData = useStore(state => state.project.data)
   const project = useStore(state => state.project)
+  const { currentPageIndex } = useStore(state => state.project)
+  const { setCurrentPageIndex, setCurrentPageName } = useActions(
+    actions => actions.project
+  )
 
   const { allowEdit, lastCLickCellIndex, modeLanguage, staticCells } = useStore(
     state => state.pageSettings
@@ -25,14 +31,44 @@ function ProjectHome({ data }: IProps) {
   const { loadProject, setProject } = useActions(actions => actions.project)
 
   useEffect(() => {
-    if (!projectData.name || projectData.name !== data.name) {
-      console.log({ data })
-      loadProject(data)
+    if (currentPageIndex === null) {
+      const index = data.pages.findIndex(page => page.name === pageName)
+      if (index < 0) {
+        console.log('Page not found')
+        setProject(project => {
+          const newData = { ...data }
+          newData.pages = [...data.pages, createNewPage(pageName)]
+          console.log({ newData, data })
+          return newData
+        })
+        setCurrentPageIndex(data.pages.length)
+        console.log({ indexBotado: data.pages.length })
+      } else {
+        loadProject(data)
+        setCurrentPageIndex(index)
+      }
+      setCurrentPageName(pageName)
+      // const index2 =
+      //   projectData.pages.length > 0 ? projectData.pages.length - 1 : 0
     }
+
+    // if (!projectData.name || projectData.name !== data.name) {
+    //   console.log({ data })
+    //   loadProject(data)
+    // }
   }, [])
 
   if (!projectData.name) {
     return <div>Carregando</div>
+  }
+
+  if (currentPageIndex === null || currentPageIndex < 0) {
+    return (
+      <div>
+        <div>Não tem</div>
+        <ButtonsMenu />
+      </div>
+    )
   }
 
   console.log(project.isSaved)
@@ -57,16 +93,15 @@ function ProjectHome({ data }: IProps) {
             onChange={e => {
               setProject(prev => {
                 const newProject = { ...prev }
-                newProject.pages[0].cells[lastCLickCellIndex].code[
-                  modeLanguage
-                ] = e.target.value
+                newProject.pages[currentPageIndex].cells[
+                  lastCLickCellIndex
+                ].code[modeLanguage] = e.target.value
                 return newProject
               })
             }}
             value={
-              projectData.pages[0]?.cells[lastCLickCellIndex]?.code[
-                modeLanguage
-              ]
+              projectData.pages[currentPageIndex]?.cells[lastCLickCellIndex]
+                ?.code[modeLanguage]
             }
           />
         </EditCodeDT>
@@ -81,15 +116,15 @@ function ProjectHome({ data }: IProps) {
           }
           setProject((prev: I_Project) => {
             const newProject = { ...prev }
-            newProject.pages[0].cells = newProject.pages[0].cells.map(
-              (c, i) => ({ ...c, layout: layouts[i] })
-            )
+            newProject.pages[currentPageIndex].cells = newProject.pages[
+              currentPageIndex
+            ].cells.map((c, i) => ({ ...c, layout: layouts[i] }))
             return newProject
           })
         }}
         onLastCellClick={(index: number) => setLastCLickCellIndex(index)}
         lastCellCLickIndex={lastCLickCellIndex}
-        cells={projectData.pages[0].cells}
+        cells={projectData.pages[currentPageIndex].cells}
         isDraggable={!staticCells}
         allowEdit={allowEdit}
         mode={modeLanguage}
@@ -113,9 +148,9 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       data: data.data,
-      oi: projectName,
+      pageName: context.params.pageName,
     },
   }
 }
 
-export default ProjectHome
+export default Page

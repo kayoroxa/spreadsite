@@ -1,5 +1,5 @@
 import EditInPlace from '../EditInPlace'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 // import { tryEval } from '../../../utils/funcsForSheet'
 import styled from 'styled-components'
 import { I_Code } from '../../utils/@types/projectTypes'
@@ -47,6 +47,7 @@ export default function InsideBox({
   tryEval,
   allowEdit,
 }: Props) {
+  console.log({ value, modeLang })
   const [isEditing, setIsEditing] = useState(false)
   // console.log({ id: value, printBrothers: printBrothers() })
   const showCode = !isEditing || !allowEdit
@@ -58,7 +59,6 @@ export default function InsideBox({
       cssInput={value.css}
     >
       {/* <div>{value.css}</div> */}
-
       {modeLang === 'html' && showCode && (
         <div dangerouslySetInnerHTML={{ __html: value.html }} />
       )}
@@ -69,9 +69,9 @@ export default function InsideBox({
       {isEditing && allowEdit && (
         <EditInPlace
           value={value[modeLang]}
-          onChange={(value: ObjLang) =>
-            onValueChange((prev: ObjLang) => ({ ...prev, [modeLang]: value }))
-          }
+          onChange={(value: ObjLang) => {
+            // onValueChange((prev: ObjLang) => ({ ...prev, [modeLang]: value }))
+          }}
           breakLine={false}
           colors={true}
           isEditing={isEditing}
