@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useActions, useStore } from '../../../store/models'
 import { I_Layout, I_Project } from '../../utils/@types/projectTypes'
 import axios from 'axios'
@@ -45,7 +45,7 @@ function Page({ data }: IProps) {
       const index = data.pages.findIndex(page => page.name === pageName)
       if (index < 0) {
         console.log('Page not found')
-        setProject(project => {
+        setProject(() => {
           const newData = { ...data }
           newData.pages = [...data.pages, createNewPage(pageName)]
           console.log({ newData, data })
@@ -147,6 +147,7 @@ function Page({ data }: IProps) {
           position: 'fixed',
           bottom: 0,
           justifyContent: 'space-between',
+          zIndex: 1000,
         }}
       >
         <ButtonsMenu />

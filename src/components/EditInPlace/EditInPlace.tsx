@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { ContainerEditInPlace } from './styles-edit-in-place'
 
@@ -14,8 +14,6 @@ interface IProps {
 const EditInPlace = ({
   value,
   onChange,
-  breakLine,
-  colors,
   isEditing,
   onBlur,
   showDivResult = true,

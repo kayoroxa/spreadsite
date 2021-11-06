@@ -1,12 +1,7 @@
-import styled from 'styled-components'
-const Title = styled.h1`
-  color: red;
-  font-size: 50px;
-`
 import InsideBox from '../InsideBox/InsideBox'
 import { I_Code } from '../../utils/@types/projectTypes'
 import { mainMethodsPlanilha } from '../../utils/funcsForSheet'
-import { useActions, useStore } from '../../../store/models'
+import { useStore } from '../../../store/models'
 
 interface IProps {
   code: I_Code
@@ -29,7 +24,6 @@ export default function InCell({
 }: IProps) {
   const projectData = useStore(store => store.project.data)
   const { currentPageName } = useStore(store => store.project)
-  const { setProject } = useActions(actions => actions.project)
 
   // function handleCodeChange(codes: I_Code[]) {
   //   setProject(prev => {

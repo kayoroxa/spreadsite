@@ -1,10 +1,9 @@
 import GridLayout from 'react-grid-layout'
 import InCell from '../InCell'
 import { ContainerMainCells } from './styles-main-cells'
-import { I_Cell, I_Code, I_Layout } from '../../utils/@types/projectTypes'
+import { I_Cell, I_Layout } from '../../utils/@types/projectTypes'
 import { useMemo } from 'react'
 import useWindowSize from '../../utils/useWindowSize'
-type ValuesFunc = (prev: I_Code) => I_Code
 
 export default function MainCells({
   onLayoutChange,
@@ -19,14 +18,6 @@ export default function MainCells({
   const layouts: I_Layout[] = useMemo(() => {
     return cells.map((cell: I_Cell) => cell.layout)
   }, [cells])
-
-  function handleSetAllValues(index: number, valuesFunc: ValuesFunc) {
-    // setAllValues(prev => {
-    //   const newValues = [...prev]
-    //   newValues[index] = valuesFunc(prev[index])
-    //   return newValues
-    // })
-  }
 
   return (
     <ContainerMainCells>
@@ -82,7 +73,7 @@ export default function MainCells({
             >
               <InCell
                 code={cell.code}
-                handleSetAllCodes={handleSetAllValues}
+                handleSetAllCodes={() => {}}
                 index={index}
                 mode={mode}
                 allowEdit={false}

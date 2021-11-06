@@ -6,9 +6,9 @@ export default function getNewLayout(
 ): I_Cell {
   // if (!myLayout) throw new Error('MyLayout não existe')
   const layoutResult = {
-    h: 10,
+    h: 3,
     i: '0',
-    w: 10,
+    w: 5,
     x: 0,
     y: 0,
     minH: 2.5,

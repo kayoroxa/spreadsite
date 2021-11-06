@@ -1,5 +1,3 @@
-import { I_Code } from './@types/projectTypes'
-
 import _ from 'lodash'
 import { PageAndCode } from './@types/othersTypes'
 
@@ -11,12 +9,12 @@ export function mainMethodsPlanilha(
   // console.log(codes)
   function replaceCode(code: string) {
     const replaces: [RegExp, string][] = [
+      [/R(\d+)_(\S+)/gi, 'pegar($1, "$2").get.result()'],
       [/R(\d+)/gi, 'pegar($1).get.result()'],
-      [/R_(.*?)_(\d+)/gi, 'pegar($2, "$1").get.result()'],
+      [/C(\d+)_(\S+)/gi, 'pegar($1, "$2").get.code()'],
       [/C(\d+)/gi, 'pegar($1).get.code()'],
-      [/C_(.*?)_(\d+)/gi, 'pegar($2, "$1").get.code()'],
+      [/S(\d+)_(\S+)/gi, 'pegar($1, "$2").get.style()'],
       [/S(\d+)/gi, 'pegar($1).get.style()'],
-      [/S_(.*?)_(\d+)/gi, 'pegar($2, "$1").get.style()'],
     ]
     let newCode = code
     replaces.forEach(replace => {
@@ -79,10 +77,11 @@ export function mainMethodsPlanilha(
 
   return {
     tryEval,
+    pegar,
   }
 }
 
-export function tryEval(code: string, context: I_Code[]) {
+export function tryEval(code: string) {
   if (code?.[0] !== '=') return code
   try {
     return eval(code.slice(1))

@@ -3,16 +3,6 @@ import { useActions, useStore } from '../../../store/models'
 
 import { ContainerButtonsMenu } from './styles-buttons-menu'
 
-interface IProps {
-  setAllowEdit: (allowEdit: boolean) => void
-  addLayout: () => void
-  resetLayout: () => void
-  setIsDraggable: (callBack: (prev: boolean) => any) => void
-  deleteCell: (lastCLickIndex: number | null) => void
-  allowEdit: boolean
-  isDraggable: boolean
-}
-
 const ButtonsMenu = () => {
   const { allowEdit, lastCLickCellIndex, staticCells } = useStore(
     state => state.pageSettings

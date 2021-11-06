@@ -23,7 +23,11 @@ InsideBox.defaultProps = {
   modeLang: 'js',
 }
 
-const MainStyle = styled.div`
+interface SProps {
+  cssInput: string
+}
+
+const MainStyle = styled.div<SProps>`
   width: 100%;
   height: 100%;
   display: flex;
@@ -42,7 +46,6 @@ const MainStyle = styled.div`
 
 export default function InsideBox({
   value,
-  onValueChange,
   modeLang,
   tryEval,
   allowEdit,
@@ -70,6 +73,7 @@ export default function InsideBox({
         <EditInPlace
           value={value[modeLang]}
           onChange={(value: ObjLang) => {
+            console.log({ value })
             // onValueChange((prev: ObjLang) => ({ ...prev, [modeLang]: value }))
           }}
           breakLine={false}
