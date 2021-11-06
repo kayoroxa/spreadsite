@@ -29,11 +29,15 @@ export default async function handler(req, res) {
           runValidators: true,
         })
         if (!project) {
-          return res.status(400).json({ success: false })
+          try {
+            Project.create(req.body)
+          } catch (error) {
+            res.status(400).json({ success: false, message: error.message })
+          }
         }
         res.status(200).json({ success: true, data: project })
       } catch (error) {
-        res.status(400).json({ success: false })
+        res.status(400).json({ success: false, error, message: error.message })
       }
       break
 

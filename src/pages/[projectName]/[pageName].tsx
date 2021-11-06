@@ -85,7 +85,7 @@ function Page({ data }: IProps) {
   console.log(project.isSaved)
   return (
     <div>
-      {JSON.stringify(projectData.pages.map(p => p.cells.map(c => c.layout)))}
+      {/* {JSON.stringify(projectData.pages.map(p => p.cells.map(c => c.layout)))} */}
       {allowEdit ||
         (!staticCells && (
           <p style={{ position: 'fixed' }}>
@@ -160,17 +160,21 @@ export async function getServerSideProps(context: any) {
   // await dbConnect()
   const projectName = context.params.projectName
   // const data = await Project.find({ name: projectName })
-
-  const res = await axios.get(
-    `http://localhost:3000/api/projects/${projectName}`
-  )
-  const data = res.data
-  // const data = await res.json()
-  // console.log(data[0])
-  return {
-    props: {
-      data: data.data,
-    },
+  try {
+    const res = await axios.get(
+      `http://localhost:3000/api/projects/${projectName}`
+    )
+    const data = res.data
+    return { props: { data: data.data } }
+  } catch (error) {
+    return {
+      props: {
+        data: {
+          name: projectName,
+          pages: [],
+        },
+      },
+    }
   }
 }
 
