@@ -28,7 +28,7 @@ export default function InCell({
   handleSetAllCodes,
 }: IProps) {
   const projectData = useStore(store => store.project.data)
-  const { currentPageIndex } = useStore(store => store.project)
+  const { currentPageName } = useStore(store => store.project)
   const { setProject } = useActions(actions => actions.project)
 
   // function handleCodeChange(codes: I_Code[]) {
@@ -42,10 +42,11 @@ export default function InCell({
   // }
   const allValues = projectData.pages.map(page => ({
     codes: page.cells.map(cell => cell.code),
+    pageName: page.name,
   }))
 
-  if (currentPageIndex === null) return <div>Page Index NULL</div>
-  const { tryEval } = mainMethodsPlanilha(allValues, currentPageIndex)
+  if (currentPageName === null) return <div>Page Name NULL</div>
+  const { tryEval } = mainMethodsPlanilha(allValues, currentPageName)
   // const tryEval = (v: any) => console.log({ eval: v })
 
   return (

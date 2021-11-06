@@ -6,13 +6,23 @@ import MainCells from '../../components/MainCells'
 import ButtonsMenu from '../../components/ButtonsMenu'
 import EditCodeDT from '../../components/EditCodeDT'
 import { createNewPage } from '../../utils/createNewPage'
-
+import ButtonsPage from '../../components/ButtonsPage'
+import { useRouter } from 'next/router'
 interface IProps {
   data: I_Project
-  pageName: string
 }
 
-function Page({ data, pageName }: IProps) {
+function Page({ data }: IProps) {
+  function getPageName(): string {
+    const router = useRouter()
+    const pageName = router.query.pageName
+    if (!pageName) return 'index'
+    else if (Array.isArray(pageName)) return pageName[0]
+    else return pageName
+  }
+
+  let pageName = getPageName()
+
   const projectData = useStore(state => state.project.data)
   const project = useStore(state => state.project)
   const { currentPageIndex } = useStore(state => state.project)
@@ -85,7 +95,7 @@ function Page({ data, pageName }: IProps) {
       {lastCLickCellIndex !== null && allowEdit && (
         <EditCodeDT
           setMode={setModeLanguage}
-          close={() => console.log('oi')}
+          close={() => setLastCLickCellIndex(null)}
           mode={modeLanguage}
         >
           <textarea
@@ -130,7 +140,18 @@ function Page({ data, pageName }: IProps) {
         allowEdit={allowEdit}
         mode={modeLanguage}
       />
-      <ButtonsMenu />
+      <div
+        style={{
+          display: 'flex',
+          width: '100%',
+          position: 'fixed',
+          bottom: 0,
+          justifyContent: 'space-between',
+        }}
+      >
+        <ButtonsMenu />
+        <ButtonsPage />
+      </div>
     </div>
   )
 }
@@ -149,7 +170,6 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       data: data.data,
-      pageName: context.params.pageName,
     },
   }
 }

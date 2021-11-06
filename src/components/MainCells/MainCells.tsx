@@ -40,13 +40,29 @@ export default function MainCells({
         onLayoutChange={(layouts: I_Layout[]) => {
           console.log({ size: layouts })
           onLayoutChange(
-            layouts.map(({ h, i, w, x, y }: I_Layout) => ({ h, i, w, x, y }))
+            layouts.map(({ h, i, w, x, y, minH, minW }: I_Layout) => ({
+              h,
+              i,
+              w,
+              x,
+              y,
+              minH,
+              minW,
+            }))
           )
         }}
         onDragStop={(layouts: I_Layout[]) => {
           console.log({ drag: layouts })
           onLayoutChange(
-            layouts.map(({ h, i, w, x, y }: I_Layout) => ({ h, i, w, x, y }))
+            layouts.map(({ h, i, w, x, y, minH, minW }: I_Layout) => ({
+              h,
+              i,
+              w,
+              x,
+              y,
+              minH,
+              minW,
+            }))
           )
         }}
         preventCollision={true}

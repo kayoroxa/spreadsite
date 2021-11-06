@@ -6,14 +6,17 @@ import { PageAndCode } from './@types/othersTypes'
 export function mainMethodsPlanilha(
   pageCodes: PageAndCode[],
   // handleCodeChange: (codes: PageAndCode[]) => void,
-  currentPageIndex: number
+  currentPageName: string | null
 ) {
   // console.log(codes)
   function replaceCode(code: string) {
     const replaces: [RegExp, string][] = [
       [/R(\d+)/gi, 'pegar($1).get.result()'],
+      [/R_(.*?)_(\d+)/gi, 'pegar($2, "$1").get.result()'],
       [/C(\d+)/gi, 'pegar($1).get.code()'],
+      [/C_(.*?)_(\d+)/gi, 'pegar($2, "$1").get.code()'],
       [/S(\d+)/gi, 'pegar($1).get.style()'],
+      [/S_(.*?)_(\d+)/gi, 'pegar($2, "$1").get.style()'],
     ]
     let newCode = code
     replaces.forEach(replace => {
@@ -47,9 +50,11 @@ export function mainMethodsPlanilha(
     }
   }
 
-  function pegar(index: number, pageIndex = currentPageIndex) {
+  function pegar(index: number, pageName = currentPageName) {
     // console.log({ codes, pegar: true })
-    const code = pageCodes[pageIndex].codes[index]
+    if (!pageName) return 'Error no page name'
+    const code = pageCodes.find(pageCode => pageCode.pageName === pageName)
+      ?.codes[index]
 
     if (code) {
       return {

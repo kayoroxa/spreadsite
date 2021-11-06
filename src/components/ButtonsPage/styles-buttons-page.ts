@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ContainerButtonsMenu = styled.div`
+export const ContainerButtonsPage = styled.div`
   display: flex;
   align-items: center;
 `
