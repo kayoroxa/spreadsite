@@ -146,6 +146,10 @@ function Page({ data }: IProps) {
           bottom: 0,
           justifyContent: 'space-between',
           zIndex: 1000,
+          background: '#242424',
+          padding: '10px 5px',
+          borderRadius: '20px 20px 0 0',
+          boxShadow: '0 -5px 10px rgba(0,0,0,0.2)',
         }}
       >
         <ButtonsMenu />

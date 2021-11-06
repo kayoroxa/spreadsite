@@ -1,0 +1,24 @@
+
+✔ css don't work (ficando undfined) @done(21-10-29 15:03)
+☐ fix R1 não executar eval dnv, pode ser pesado
+✔ botar o easy peasy layout @done(21-11-01 18:12)
+✔ editar codigo como dev tool @done(21-11-01 18:12)
+☐ control s não pegar, ou pegar 
+☐ botão delete funcionar
+✔ botar shadow nas celulas @done(21-11-01 18:13)
+☐ quando tiver 1 html, ele vira o retorno.. pra outras celulas poder pegar os bagui @high
+✔ bloquear drag @done(21-11-01 18:16)
+☐ colocar cores de paleta ( c1 c2 c3 ....) [color1 ...]
+☐ botar onEvent, qnd tiver html é relacionado a html, se não relacionado a celula @high
+☐ Criar template, no componente de uma página vou dizer qual [padrão] tipo essencial grafics, no box da pagina, vou poder alterar os parametros
+☐ criar others page @critical
+☐ create unic id for cells
+☐ atalho para tirar os botão, hud @high
+
+estrutura:
+  MainCells
+    GridLayout
+      div key
+        InCell
+          InsideBox
+            EditInPlace

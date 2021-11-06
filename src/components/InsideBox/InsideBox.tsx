@@ -35,6 +35,10 @@ const MainStyle = styled.div<SProps>`
   align-items: center;
   justify-content: center;
   text-align: center;
+  > div {
+    width: 100%;
+    height: 100%;
+  }
   * {
     width: 100%;
   }

@@ -3,6 +3,9 @@ body {
   overflow-x: hidden;
 }
 
+.react-grid-layout.layout {
+  margin-bottom: 60px;
+}
 ::-webkit-scrollbar {
   height: 12px;
   width: 12px;
