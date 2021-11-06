@@ -4,11 +4,11 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { I_Code } from '../../utils/@types/projectTypes'
 
-interface ObjLang {
-  js: ''
-  html: ''
-  css: ''
-}
+// interface ObjLang {
+//   js: ''
+//   html: ''
+//   css: ''
+// }
 interface Props {
   value: I_Code
   onValueChange: (callBack: (prev: I_Code) => I_Code) => void
