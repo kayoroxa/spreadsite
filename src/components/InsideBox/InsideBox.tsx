@@ -70,7 +70,9 @@ export default function InsideBox({
       {modeLang === 'html' && showCode && parse(value.html)}
       {/* {modeLang === 'css' && showCode && <div>{value.css}</div>} */}
       {modeLang === 'js' && showCode && (
-        <div style={{ width: '100%' }}>{tryEval(value.js || '')}</div>
+        <p className="js" style={{ width: '100%' }}>
+          {tryEval(value.js || '')}
+        </p>
       )}
       {isEditing && allowEdit && (
         <EditInPlace
