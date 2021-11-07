@@ -30,13 +30,13 @@ body {
 }
 
 .InsideBox {
-  background-color: rgba(136, 136, 136, 0.2);
+  background-color: rgb(65, 65, 65);
   /* opacity: 0.1; */
   color: rgb(196, 196, 196);
   /* border-radius: 10px; */
   /* padding: 10px; */
   /* margin: 10px; */
-  box-shadow: 0px 5px 6px rgb(0, 0, 0, 0.2) !important;
+  /* box-shadow: 0px 5px 6px rgb(0, 0, 0, 0.5) !important; */
 }
 
 .InsideBox > * {
