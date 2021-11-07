@@ -22,6 +22,5 @@ export const ContainerMainCells = styled.div`
   .layout * {
     /* background: #fff; */
     margin: 0;
-    overflow: hidden !important;
   }
 `

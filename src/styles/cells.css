@@ -3,10 +3,10 @@
   transition: height 200ms ease;
 }
 .react-grid-item {
-  box-shadow: rgb(0 0 0 / 28%) 1px 6px 12px !important;
   transition: all 200ms ease;
   transition-property: left, top;
 }
+
 .react-grid-item img {
   pointer-events: none;
   user-select: none;

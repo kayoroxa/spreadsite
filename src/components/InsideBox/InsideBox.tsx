@@ -3,6 +3,7 @@ import { useState } from 'react'
 // import { tryEval } from '../../../utils/funcsForSheet'
 import styled from 'styled-components'
 import { I_Code } from '../../utils/@types/projectTypes'
+import parse from 'html-react-parser'
 
 // interface ObjLang {
 //   js: ''
@@ -44,7 +45,7 @@ const MainStyle = styled.div<SProps>`
   }
 
   ${({ cssInput }) => {
-    return cssInput
+    return cssInput.replace(/\;/g, ' !important;')
   }};
 `
 
@@ -66,9 +67,7 @@ export default function InsideBox({
       cssInput={value.css}
     >
       {/* <div>{value.css}</div> */}
-      {modeLang === 'html' && showCode && (
-        <div dangerouslySetInnerHTML={{ __html: value.html }} />
-      )}
+      {modeLang === 'html' && showCode && parse(value.html)}
       {/* {modeLang === 'css' && showCode && <div>{value.css}</div>} */}
       {modeLang === 'js' && showCode && (
         <div style={{ width: '100%' }}>{tryEval(value.js || '')}</div>
