@@ -57,6 +57,7 @@ export default function InsideBox({
   const [isEditing, setIsEditing] = useState(false)
   // console.log({ id: value, printBrothers: printBrothers() })
   const showCode = !isEditing || !allowEdit
+  modeLang = value.html.length > 0 ? 'html' : 'js'
   return (
     <MainStyle
       className="InsideBox"
@@ -68,7 +69,7 @@ export default function InsideBox({
       {modeLang === 'html' && showCode && (
         <div dangerouslySetInnerHTML={{ __html: value.html }} />
       )}
-      {modeLang === 'css' && showCode && <div>{value.css}</div>}
+      {/* {modeLang === 'css' && showCode && <div>{value.css}</div>} */}
       {modeLang === 'js' && showCode && (
         <div style={{ width: '100%' }}>{tryEval(value.js || '')}</div>
       )}
