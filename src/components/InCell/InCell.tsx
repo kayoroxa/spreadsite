@@ -55,6 +55,7 @@ export default function InCell({
             padding: '0px 5px',
             fontSize: '30px',
             color: 'white',
+            width: 'auto',
           }}
         >
           {index}

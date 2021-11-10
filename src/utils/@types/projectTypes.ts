@@ -1,5 +1,13 @@
 export type I_CodeLanguage = 'js' | 'html' | 'css'
 
+export interface I_Coordinates {
+  width: number
+  height: number
+  top: number
+  left: number
+  rotateAngle: number
+}
+
 export interface I_Code {
   css: string
   html: string

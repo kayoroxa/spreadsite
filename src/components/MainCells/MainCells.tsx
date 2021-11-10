@@ -1,9 +1,14 @@
 import GridLayout from 'react-grid-layout'
 import InCell from '../InCell'
 import { ContainerMainCells } from './styles-main-cells'
-import { I_Cell, I_Layout } from '../../utils/@types/projectTypes'
+import {
+  I_Cell,
+  I_Coordinates,
+  I_Layout,
+} from '../../utils/@types/projectTypes'
 import { useMemo } from 'react'
 import useWindowSize from '../../utils/useWindowSize'
+import ResizableContent from '../ResizableContent'
 
 export default function MainCells({
   onLayoutChange,
@@ -19,70 +24,68 @@ export default function MainCells({
     return cells.map((cell: I_Cell) => cell.layout)
   }, [cells])
 
+  function convert(layout: I_Layout) {
+    // h: 44
+    // i: "0"
+    // minH: 2.5
+    // minW: 1.4
+    // w: 41
+    // x: 9
+    // y: 0
+    return {
+      width: layout?.w * 20,
+      height: layout?.h * 20,
+      top: layout?.y * 20,
+      left: layout?.x * 20,
+      rotateAngle: 0,
+    }
+  }
+  function onLayoutChangeHandler(index: number, layout: I_Coordinates) {
+    const newLayout = {
+      h: layout.height / 20,
+      i: index.toString(),
+      w: layout.width / 20,
+      x: layout.left / 20,
+      y: layout.top / 20,
+      minH: 2.5,
+      minW: 1.4,
+    }
+
+    const joinWithOthersLayouts: I_Layout[] = layouts.map(
+      (layout: I_Layout, i: number) => {
+        if (i === index) {
+          return newLayout
+        }
+        return layout
+      }
+    )
+    return onLayoutChange(joinWithOthersLayouts)
+  }
+
   return (
     <ContainerMainCells>
-      <GridLayout
-        className="layout"
-        compactType={null}
-        layout={layouts}
-        cols={80}
-        rowHeight={6}
-        width={width}
-        onLayoutChange={(layouts: I_Layout[]) => {
-          onLayoutChange(
-            layouts.map(({ h, i, w, x, y, minH, minW }: I_Layout) => ({
-              h,
-              i,
-              w,
-              x,
-              y,
-              minH,
-              minW,
-            }))
-          )
-        }}
-        onDragStop={(layouts: I_Layout[]) => {
-          onLayoutChange(
-            layouts.map(({ h, i, w, x, y, minH, minW }: I_Layout) => ({
-              h,
-              i,
-              w,
-              x,
-              y,
-              minH,
-              minW,
-            }))
-          )
-        }}
-        preventCollision={true}
-        allowOverlap={true}
-        isDraggable={isDraggable}
-        isResizable={isDraggable}
-      >
-        {cells.map((cell: I_Cell, index: number) => {
-          return (
-            <div
-              key={cell.layout.i}
-              onClick={() => onLastCellClick(index)}
-              className={
-                lastCellCLickIndex === index && allowEdit ? 'contorno' : ''
-              }
-              data-grid={cell.layout}
-            >
-              <InCell
-                code={cell.code}
-                handleSetAllCodes={() => {}}
-                index={index}
-                mode={mode}
-                allowEdit={false}
-                showIndex={
-                  lastCellCLickIndex !== null && allowEdit ? true : false
-                }
-              />
-            </div>
-          )
-        })}
-      </GridLayout>
+      {layouts.map((layout: I_Layout, index: number) => (
+        <ResizableContent
+          onClick={() => onLastCellClick(index)}
+          coordinate={convert(layout)}
+          setCoordinate={(layout2: I_Coordinates) => {
+            onLayoutChangeHandler(index, layout2)
+          }}
+          isFocused={lastCellCLickIndex === index}
+          onFocused={() => onLastCellClick(index)}
+        >
+          <InCell
+            code={cells[index].code}
+            handleSetAllCodes={() => {
+              onLayoutChange()
+            }}
+            index={index}
+            mode={mode}
+            allowEdit={false}
+            showIndex={lastCellCLickIndex !== null && allowEdit ? true : false}
+          />
+        </ResizableContent>
+      ))}
     </ContainerMainCells>
   )
 }
