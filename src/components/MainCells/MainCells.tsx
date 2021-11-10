@@ -1,4 +1,3 @@
-import GridLayout from 'react-grid-layout'
 import InCell from '../InCell'
 import { ContainerMainCells } from './styles-main-cells'
 import {
@@ -7,7 +6,7 @@ import {
   I_Layout,
 } from '../../utils/@types/projectTypes'
 import { useMemo } from 'react'
-import useWindowSize from '../../utils/useWindowSize'
+// import useWindowSize from '../../utils/useWindowSize'
 import ResizableContent from '../ResizableContent'
 
 export default function MainCells({
@@ -15,11 +14,10 @@ export default function MainCells({
   onLastCellClick,
   lastCellCLickIndex,
   cells,
-  isDraggable,
   allowEdit,
   mode,
 }: any) {
-  const [width, _] = useWindowSize()
+  // const [width, _] = useWindowSize()
   const layouts: I_Layout[] = useMemo(() => {
     return cells.map((cell: I_Cell) => cell.layout)
   }, [cells])
