@@ -32,7 +32,7 @@ const MainStyle = styled.div<SProps>`
   width: 100%;
   height: 100%;
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -42,6 +42,8 @@ const MainStyle = styled.div<SProps>`
   }
   * {
     width: 100%;
+    line-height: 0.9;
+    margin: 0;
   }
 
   ${({ cssInput }) => {
