@@ -1,6 +1,22 @@
 body {
   background-color: #292929;
   overflow-x: hidden;
+  box-sizing: border-box;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+     Introduced in Internet Explorer 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.subBloco > * {
+  width: 100%;
+  height: auto;
 }
 
 .react-grid-layout.layout {

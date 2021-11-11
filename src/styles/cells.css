@@ -1,3 +1,9 @@
+.hover {
+  z-index: 1;
+}
 .hover:hover {
   outline: aqua 1px solid;
+}
+.rect {
+  z-index: 1;
 }
