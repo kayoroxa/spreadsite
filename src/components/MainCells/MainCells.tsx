@@ -8,6 +8,8 @@ import {
 import { useMemo } from 'react'
 // import useWindowSize from '../../utils/useWindowSize'
 import ResizableContent from '../ResizableContent'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { useActions, useStore } from '../../../store/models'
 
 export default function MainCells({
   onLayoutChange,
@@ -21,6 +23,12 @@ export default function MainCells({
   const layouts: I_Layout[] = useMemo(() => {
     return cells.map((cell: I_Cell) => cell.layout)
   }, [cells])
+
+  const { duplicateLayout, deleteCell } = useActions(actions => actions.project)
+  const { currentPageIndex, data } = useStore(state => state.project)
+
+  const { setLastCLickCellIndex } = useActions(actions => actions.pageSettings)
+  const { lastCLickCellIndex } = useStore(state => state.pageSettings)
 
   function convert(layout: I_Layout) {
     // h: 44
@@ -59,6 +67,29 @@ export default function MainCells({
     )
     return onLayoutChange(joinWithOthersLayouts)
   }
+
+  useHotkeys(
+    'ctrl+d',
+    event => {
+      event.preventDefault()
+      if (currentPageIndex !== null && lastCLickCellIndex !== null) {
+        duplicateLayout(lastCLickCellIndex)
+        setLastCLickCellIndex(data.pages[currentPageIndex].cells.length)
+      }
+    },
+    [lastCLickCellIndex]
+  )
+  useHotkeys(
+    'delete',
+    event => {
+      event.preventDefault()
+      if (currentPageIndex !== null && lastCLickCellIndex !== null) {
+        deleteCell(lastCLickCellIndex)
+        setLastCLickCellIndex(data.pages[currentPageIndex].cells.length)
+      }
+    },
+    [lastCLickCellIndex]
+  )
 
   return (
     <ContainerMainCells>
