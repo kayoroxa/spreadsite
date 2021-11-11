@@ -118,7 +118,6 @@ function Page({ data }: IProps) {
 
       <MainCells
         onLayoutChange={(layouts: I_Layout[]) => {
-          console.log({ onLayoutChange: layouts })
           if (layouts.length === 0) {
             console.log('vazio')
             return

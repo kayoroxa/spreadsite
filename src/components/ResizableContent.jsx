@@ -64,10 +64,11 @@ export default function ResizableContent({
   // const { width, top, left, height, rotateAngle } = state
   return (
     <div
-    // style={{
-    //   position: 'relative',
-    //   // zIndex: isFocused ? 1000 : 0
-    // }}
+      onClick={onClick}
+      // style={{
+      //   position: 'relative',
+      //   // zIndex: isFocused ? 1000 : 0
+      // }}
     >
       <ComponentStyle ref={main} className="subBloco selectDisable hover">
         {children}
