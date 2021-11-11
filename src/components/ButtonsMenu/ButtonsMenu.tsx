@@ -15,7 +15,7 @@ const ButtonsMenu = () => {
     // deleteCell,
     // saveProjectInDb,
   } = useActions(actions => actions.project)
-  // const { isSaved, data, currentPageIndex } = useStore(state => state.project)
+  const { isSaved } = useStore(state => state.project)
 
   return (
     <ContainerButtonsMenu
@@ -59,6 +59,11 @@ const ButtonsMenu = () => {
       >
         Duplicate
       </button> */}
+      {!isSaved ? (
+        <p style={{ color: 'red', fontWeight: 'bold' }}>Not Saved</p>
+      ) : (
+        <p>Saved</p>
+      )}
     </ContainerButtonsMenu>
   )
 }
