@@ -23,6 +23,7 @@ export interface ProjectModel {
   saveProjectInDb: Thunk<ProjectModel>
 
   addLayout: Action<ProjectModel>
+  duplicateLayout: Action<ProjectModel, number | null>
   resetLayout: Action<ProjectModel>
   deleteCell: Action<ProjectModel, number>
 }
@@ -84,6 +85,13 @@ const project: ProjectModel = {
       getNewLayout(state.data.pages, state.currentPageIndex)
     )
   }),
+
+  duplicateLayout: action((state, indexCell) => {
+    if (state.currentPageIndex === null || indexCell === null) return
+    const newLayout = state.data.pages[state.currentPageIndex].cells[indexCell]
+    state.data.pages[state.currentPageIndex].cells.push(newLayout)
+  }),
+
   resetLayout: action(state => {
     if (state.currentPageIndex === null) return
     state.data.pages[state.currentPageIndex].cells = []
