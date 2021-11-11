@@ -64,16 +64,15 @@ export default function ResizableContent({
   // const { width, top, left, height, rotateAngle } = state
   return (
     <div
-      onClick={() => onClick()}
-      style={{
-        position: 'relative',
-        // zIndex: isFocused ? 1000 : 0
-      }}
+    // style={{
+    //   position: 'relative',
+    //   // zIndex: isFocused ? 1000 : 0
+    // }}
     >
-      <ComponentStyle ref={main} className="subBloco selectDisable">
+      <ComponentStyle ref={main} className="subBloco selectDisable hover">
         {children}
       </ComponentStyle>
-      <div className="hover">
+      <div>
         <div
           style={{
             opacity: isFocused ? 1 : 0,
@@ -81,7 +80,6 @@ export default function ResizableContent({
           }}
         >
           <ResizableRect
-            className="hover"
             left={coordinate.left}
             top={coordinate.top}
             width={coordinate.width}
