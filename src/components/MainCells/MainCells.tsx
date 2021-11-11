@@ -24,7 +24,9 @@ export default function MainCells({
     return cells.map((cell: I_Cell) => cell.layout)
   }, [cells])
 
-  const { duplicateLayout, deleteCell } = useActions(actions => actions.project)
+  const { duplicateLayout, deleteCell, saveProjectInDb } = useActions(
+    actions => actions.project
+  )
   const { currentPageIndex, data } = useStore(state => state.project)
 
   const { setLastCLickCellIndex } = useActions(actions => actions.pageSettings)
@@ -86,6 +88,16 @@ export default function MainCells({
       if (currentPageIndex !== null && lastCLickCellIndex !== null) {
         deleteCell(lastCLickCellIndex)
         setLastCLickCellIndex(data.pages[currentPageIndex].cells.length)
+      }
+    },
+    [lastCLickCellIndex]
+  )
+  useHotkeys(
+    'ctrl+s',
+    event => {
+      event.preventDefault()
+      if (currentPageIndex !== null && lastCLickCellIndex !== null) {
+        saveProjectInDb()
       }
     },
     [lastCLickCellIndex]
