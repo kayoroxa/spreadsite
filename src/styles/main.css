@@ -19,9 +19,6 @@ body {
   height: auto;
 }
 
-.react-grid-layout.layout {
-  margin-bottom: 60px;
-}
 ::-webkit-scrollbar {
   height: 12px;
   width: 12px;
@@ -47,7 +44,8 @@ body {
 
 .InsideBox {
   background-color: rgb(65, 65, 65);
-  box-shadow: rgb(0 0 0 / 30%) 1px 6px 12px !important;
+  box-shadow: rgb(0 0 0 / 30%) 1px 6px 12px;
+
   overflow: hidden !important;
   /* opacity: 0.1; */
   color: rgb(196, 196, 196);

@@ -61,9 +61,16 @@ export default function InsideBox({
   // console.log({ id: value, printBrothers: printBrothers() })
   const showCode = !isEditing || !allowEdit
   modeLang = value.html.length > 0 ? 'html' : 'js'
+
+  const additionalClass =
+    value.css
+      .match(/\/\/\S*/g)
+      ?.map(v => v.replace('//', ''))
+      .join(' ') || ''
+  console.log({ additionalClass })
   return (
     <MainStyle
-      className="InsideBox"
+      className={'InsideBox ' + additionalClass}
       onClick={() => setIsEditing(true)}
       style={{ cursor: allowEdit ? 'pointer' : 'default' }}
       cssInput={value.css}

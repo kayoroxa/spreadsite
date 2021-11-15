@@ -6,7 +6,7 @@ import { Fragment } from 'react'
 
 const ComponentStyle = styled.div`
   position: absolute;
-  overflow: hidden;
+  /* overflow: hidden; */
   > * {
     width: 100%;
   }

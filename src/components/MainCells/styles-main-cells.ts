@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 
 export const ContainerMainCells = styled.div`
+  background-color: #ff0000;
+  position: relative;
+  width: 100vw;
+  margin-bottom: 10px;
+
   .buttons {
     display: flex;
     position: fixed;

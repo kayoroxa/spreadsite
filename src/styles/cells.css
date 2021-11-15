@@ -7,3 +7,22 @@
 .rect {
   z-index: 1;
 }
+
+.ivjtWr {
+  z-index: 1000;
+  background: 'red';
+}
+
+.reset {
+  display: block !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.img-hover {
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
