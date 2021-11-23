@@ -19,6 +19,7 @@ export default function ResizableContent({
   onClick,
   isFocused,
   onFocused,
+  staticCells,
 }) {
   const main = useRef()
 
@@ -70,39 +71,44 @@ export default function ResizableContent({
       //   // zIndex: isFocused ? 1000 : 0
       // }}
     >
-      <ComponentStyle ref={main} className="subBloco selectDisable hover">
+      <ComponentStyle
+        ref={main}
+        className={'subBloco selectDisable' + (!staticCells ? ' hover' : '')}
+      >
         {children}
       </ComponentStyle>
-      <div>
-        <div
-          style={{
-            opacity: isFocused ? 1 : 0,
-            zIndex: isFocused ? 1000 : -900,
-          }}
-        >
-          <ResizableRect
-            left={coordinate.left}
-            top={coordinate.top}
-            width={coordinate.width}
-            height={coordinate.height}
-            rotateAngle={coordinate.rotateAngle}
-            // aspectRatio={false}
-            // minWidth={10}
-            // minHeight={10}
-            zoomable="n, w, s, e, nw, ne, se, sw"
-            // rotatable={true}
-            // onRotateStart={this.handleRotateStart}
-            // onRotate={handleRotate}
-            // onRotateEnd={handleRotate}
-            // onResizeStart={this.handleResizeStart}
-            onResize={handleResize}
-            // onResizeEnd={this.handleUp}
-            // onDragStart={this.handleDragStart}
-            onDrag={handleDrag}
-            // onDragEnd={this.handleDragEnd}
-          />
+      {!staticCells && (
+        <div>
+          <div
+            style={{
+              opacity: isFocused ? 1 : 0,
+              zIndex: isFocused ? 1000 : -900,
+            }}
+          >
+            <ResizableRect
+              left={coordinate.left}
+              top={coordinate.top}
+              width={coordinate.width}
+              height={coordinate.height}
+              rotateAngle={coordinate.rotateAngle}
+              // aspectRatio={false}
+              // minWidth={10}
+              // minHeight={10}
+              zoomable="n, w, s, e, nw, ne, se, sw"
+              // rotatable={true}
+              // onRotateStart={this.handleRotateStart}
+              // onRotate={handleRotate}
+              // onRotateEnd={handleRotate}
+              // onResizeStart={this.handleResizeStart}
+              onResize={handleResize}
+              // onResizeEnd={this.handleUp}
+              // onDragStart={this.handleDragStart}
+              onDrag={handleDrag}
+              // onDragEnd={this.handleDragEnd}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

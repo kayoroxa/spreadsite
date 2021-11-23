@@ -118,7 +118,7 @@ function Page({ data }: IProps) {
 
       <MainCells
         onLayoutChange={(layouts: I_Layout[]) => {
-          if (layouts.length === 0) {
+        staticCells={staticCells}
             console.log('vazio')
             return
           }

@@ -13,10 +13,10 @@ import { useActions, useStore } from '../../../store/models'
 
 export default function MainCells({
   onLayoutChange,
-  onLastCellClick,
+  staticCells,
   lastCellCLickIndex,
   cells,
-  allowEdit,
+  staticCells: boolean
   mode,
 }: any) {
   // const [width, _] = useWindowSize()
@@ -114,6 +114,7 @@ export default function MainCells({
           }}
           isFocused={lastCellCLickIndex === index}
           onFocused={() => onLastCellClick(index)}
+          staticCells={staticCells}
         >
           <InCell
             code={cells[index].code}
