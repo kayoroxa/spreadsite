@@ -1,7 +1,9 @@
+import { I_CodeLanguage } from './../../src/utils/@types/projectTypes'
 import axios from 'axios'
 import { action, Action, thunk, Thunk, thunkOn, ThunkOn } from 'easy-peasy'
 import { I_Page, I_Project } from '../../src/utils/@types/projectTypes'
 import getNewLayout from '../../src/utils/getNewLayout'
+import replacePatterns from '../../src/utils/replacePatterns'
 
 type MyActionPrev<T> = T | ((prev: T) => T)
 export interface ProjectModel {
@@ -26,6 +28,21 @@ export interface ProjectModel {
   duplicateLayout: Action<ProjectModel, number | null>
   resetLayout: Action<ProjectModel>
   deleteCell: Action<ProjectModel, number>
+
+  setCode: Action<
+    ProjectModel,
+    { index: number; code: string; language: I_CodeLanguage }
+  >
+
+  replaceCode: Action<
+    ProjectModel,
+    {
+      index: number
+      input: string
+      // replacement: string
+      language: I_CodeLanguage
+    }
+  >
 }
 
 const project: ProjectModel = {
@@ -69,13 +86,34 @@ const project: ProjectModel = {
     }
   ),
 
+  setCode: action((state, { language, index, code }) => {
+    if (state.currentPageIndex === null) return
+    state.data.pages[state.currentPageIndex].cells[index] = {
+      ...state.data.pages[state.currentPageIndex].cells[index],
+      [language]: code,
+    }
+  }),
+
+  replaceCode: action((state, { index, input, language }) => {
+    if (state.currentPageIndex === null) return
+    state.data.pages[state.currentPageIndex].cells[index] = {
+      ...state.data.pages[state.currentPageIndex].cells[index],
+      [language]: replacePatterns(
+        input,
+        state.data.pages[state.currentPageIndex].cells[index].code[language]
+      ),
+    }
+  }),
+
   saveProjectInDb: thunk(async (actions, _, { getState }) => {
+    const endPoint = 'http://localhost:3000/api/projects/'
+    // const endPoint = process.env.END_POINT
+    //   ? process.env.END_POINT
+    //   : 'https://spreadsite.vercel.app/api/projects/'
+
     const project = getState()
     actions.setIsSaved(true)
-    const response = await axios.put(
-      'https://spreadsite.vercel.app/api/projects/' + project.data.name,
-      project.data
-    )
+    const response = await axios.put(endPoint + project.data.name, project.data)
     console.log({ response })
   }),
 

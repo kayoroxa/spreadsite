@@ -3,8 +3,8 @@
 ☐ fix R1 não executar eval dnv, pode ser pesado
 ✔ botar o easy peasy layout @done(21-11-01 18:12)
 ✔ editar codigo como dev tool @done(21-11-01 18:12)
-☐ control s não pegar, ou pegar 
-☐ botão delete funcionar
+✔ control s não pegar, ou pegar 
+✔ botão delete funcionar
 ✔ botar shadow nas celulas @done(21-11-01 18:13)
 ☐ quando tiver 1 html, ele vira o retorno.. pra outras celulas poder pegar os bagui @high
 ✔ bloquear drag @done(21-11-01 18:16)
@@ -14,6 +14,7 @@
 ☐ criar others page @critical
 ☐ create unic id for cells
 ☐ atalho para tirar os botão, hud @high
+☐ create button
 
 estrutura:
   MainCells

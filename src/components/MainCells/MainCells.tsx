@@ -4,6 +4,7 @@ import {
   I_Cell,
   I_Coordinates,
   I_Layout,
+  I_Project,
 } from '../../utils/@types/projectTypes'
 import { useMemo } from 'react'
 // import useWindowSize from '../../utils/useWindowSize'
@@ -24,13 +25,29 @@ export default function MainCells({
     return cells.map((cell: I_Cell) => cell.layout)
   }, [cells])
 
+  function onLayoutChange(layouts: I_Layout[]) {
+    if (layouts.length === 0 || currentPageIndex === null) {
+      console.log('vazio')
+      return
+    }
+    setProject((prev: I_Project) => {
+      const newProject = { ...prev }
+      newProject.pages[currentPageIndex].cells = newProject.pages[
+        currentPageIndex
+      ].cells.map((c, i) => ({ ...c, layout: layouts[i] }))
+      return newProject
+    })
+  }
+
+  function onLastCellClick(index: number) {
+    setLastCLickCellIndex(index)
+  }
+
+  // const [width, _] = useWindowSize()
+
   const { duplicateLayout, deleteCell, saveProjectInDb } = useActions(
     actions => actions.project
   )
-  const { currentPageIndex, data } = useStore(state => state.project)
-
-  const { setLastCLickCellIndex } = useActions(actions => actions.pageSettings)
-  const { lastCLickCellIndex } = useStore(state => state.pageSettings)
 
   function convert(layout: I_Layout) {
     // h: 44
@@ -76,7 +93,7 @@ export default function MainCells({
       event.preventDefault()
       if (currentPageIndex !== null && lastCLickCellIndex !== null) {
         duplicateLayout(lastCLickCellIndex)
-        setLastCLickCellIndex(data.pages[currentPageIndex].cells.length)
+        setLastCLickCellIndex(projectData.pages[currentPageIndex].cells.length)
       }
     },
     [lastCLickCellIndex]
@@ -87,7 +104,7 @@ export default function MainCells({
       event.preventDefault()
       if (currentPageIndex !== null && lastCLickCellIndex !== null) {
         deleteCell(lastCLickCellIndex)
-        setLastCLickCellIndex(data.pages[currentPageIndex].cells.length)
+        setLastCLickCellIndex(projectData.pages[currentPageIndex].cells.length)
       }
     },
     [lastCLickCellIndex]
@@ -102,6 +119,16 @@ export default function MainCells({
     },
     [lastCLickCellIndex]
   )
+  useHotkeys(
+    'esc',
+    event => {
+      event.preventDefault()
+      if (currentPageIndex !== null && lastCLickCellIndex !== null) {
+        setLastCLickCellIndex(null)
+      }
+    },
+    [lastCLickCellIndex]
+  )
 
   return (
     <ContainerMainCells>
@@ -112,19 +139,19 @@ export default function MainCells({
           setCoordinate={(layout2: I_Coordinates) => {
             onLayoutChangeHandler(index, layout2)
           }}
-          isFocused={lastCellCLickIndex === index}
+          isFocused={lastCLickCellIndex === index}
           onFocused={() => onLastCellClick(index)}
           staticCells={staticCells}
         >
           <InCell
             code={cells[index].code}
             handleSetAllCodes={() => {
-              onLayoutChange()
+              onLayoutChange(layouts)
             }}
             index={index}
             mode={mode}
             allowEdit={false}
-            showIndex={lastCellCLickIndex !== null && allowEdit ? true : false}
+            showIndex={lastCLickCellIndex !== null && allowEdit ? true : false}
           />
         </ResizableContent>
       ))}

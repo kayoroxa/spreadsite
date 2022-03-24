@@ -1,10 +1,21 @@
+import { I_CodeLanguage } from './@types/projectTypes'
 import _ from 'lodash'
 import { PageAndCode } from './@types/othersTypes'
 
 export function mainMethodsPlanilha(
   pageCodes: PageAndCode[],
+  currentPageName: string | null,
+  setProject: (data: {
+    index: number
+    code: string
+    language: I_CodeLanguage
+  }) => void,
+  replaceMyCode: (data: {
+    index: number
+    input: string
+    language: I_CodeLanguage
+  }) => void
   // handleCodeChange: (codes: PageAndCode[]) => void,
-  currentPageName: string | null
 ) {
   // console.log(codes)
   function replaceCode(code: string) {
@@ -39,14 +50,9 @@ export function mainMethodsPlanilha(
     } catch (e) {
       return 'error: ' + e
     }
-
-    if (code?.[0] !== '=') return code
-    try {
-      return eval(code.slice(1))
-    } catch (e: any) {
-      return e.message
-    }
   }
+  //pegar(1).replace.html(`html.replace('<button>$</button>', "Ganhar Dinheiro")`)
+  //<button>oi</button>
 
   function pegar(index: number, pageName = currentPageName) {
     // console.log({ codes, pegar: true })
@@ -57,15 +63,16 @@ export function mainMethodsPlanilha(
     if (code) {
       return {
         set: {
-          code: () => {
-            console.log('wait')
-            // setCode((code: I_Code[]) => {
-            //   const newCode = _.cloneDeep(code)
-            //   newCode[index].js = value
-            //   return newCode
-            // })
+          code: (code: string) => {
+            setProject({ index, code, language: 'js' })
           },
         },
+        replace: {
+          html: (input: string) => {
+            replaceMyCode({ index, input, language: 'html' })
+          },
+        },
+
         get: {
           code: () => code.js,
           css: () => code.css,

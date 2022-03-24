@@ -51,6 +51,10 @@ const MainStyle = styled.div<SProps>`
   }};
 `
 
+const imprimir = () => {
+  console.log('imprimir')
+}
+
 export default function InsideBox({
   value,
   modeLang,

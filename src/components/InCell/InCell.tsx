@@ -1,7 +1,7 @@
-import InsideBox from '../InsideBox/InsideBox'
-import { I_Code } from '../../utils/@types/projectTypes'
-import { mainMethodsPlanilha } from '../../utils/funcsForSheet'
-import { useStore } from '../../../store/models'
+import InsideBox from 'components/InsideBox/InsideBox'
+import { I_Code } from 'utils/@types/projectTypes'
+import { mainMethodsPlanilha } from 'utils/funcsForSheet'
+import { useActions, useStore } from '../../../store/models'
 
 interface IProps {
   code: I_Code
@@ -24,6 +24,7 @@ export default function InCell({
 }: IProps) {
   const projectData = useStore(store => store.project.data)
   const { currentPageName } = useStore(store => store.project)
+  const { setCode, replaceCode } = useActions(actions => actions.project)
 
   // function handleCodeChange(codes: I_Code[]) {
   //   setProject(prev => {
@@ -40,7 +41,12 @@ export default function InCell({
   }))
 
   if (currentPageName === null) return <div>Page Name NULL</div>
-  const { tryEval } = mainMethodsPlanilha(allValues, currentPageName)
+  const { tryEval } = mainMethodsPlanilha(
+    allValues,
+    currentPageName,
+    setCode,
+    replaceCode
+  )
   // const tryEval = (v: any) => console.log({ eval: v })
 
   return (
